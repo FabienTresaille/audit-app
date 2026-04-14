@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Alsek Audit Digital</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .admin-page { min-height: 100vh; padding: var(--space-2xl); }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2xl); }
+    .admin-header h1 { font-size: 1.5rem; }
+    .audit-table { width: 100%; border-collapse: collapse; }
+    .audit-table th, .audit-table td { padding: var(--space-md) var(--space-lg); text-align: left; border-bottom: 1px solid var(--border-subtle); }
+    .audit-table th { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .audit-table tr:hover td { background: var(--bg-card-hover); }
+    .audit-table td { font-size: 0.9rem; }
+    .score-mini { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; }
+    .status-badge { padding: 3px 10px; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .status-complete { background: rgba(16,185,129,0.15); color: var(--color-success); }
+    .status-analyzing { background: rgba(245,158,11,0.15); color: var(--color-warning); }
+    .status-error { background: rgba(239,68,68,0.15); color: var(--color-danger); }
+    .empty-state { text-align: center; padding: var(--space-3xl); color: var(--text-muted); }
+    .empty-state__icon { font-size: 3rem; margin-bottom: var(--space-lg); }
+    .action-link { color: var(--accent-violet); text-decoration: none; font-weight: 500; margin-right: var(--space-md); }
+    .action-link:hover { text-decoration: underline; }
+    .action-link--danger { color: var(--color-danger); }
+  </style>
+</head>
+<body>
+  <div class="admin-page container">
+    <div class="bg-glow bg-glow--violet"></div>
+    
+    <header class="admin-header">
+      <div>
+        <h1><span class="text-gradient">ALSEK</span> — Tableau de bord</h1>
+        <p class="text-muted" style="font-size:0.85rem;margin-top:4px;" id="auditCount">—</p>
+      </div>
+      <a href="/" class="btn btn-primary">+ Nouvel Audit</a>
+    </header>
+
+    <div class="glass-card" style="padding:0; overflow:hidden;">
+      <div id="tableContainer">
+        <div class="empty-state">
+          <div class="empty-state__icon">📊</div>
+          <div>Chargement...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', loadAudits);
+
+    async function loadAudits() {
+      try {
+        const response = await fetch('/api/audits');
+        const audits = await response.json();
+        
+        document.getElementById('auditCount').textContent = `${audits.length} audit(s) réalisé(s)`;
+        
+        if (audits.length === 0) {
+          document.getElementById('tableContainer').innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state__icon">📝</div>
+              <div>Aucun audit réalisé</div>
+              <p class="text-muted" style="margin-top:var(--space-sm);font-size:0.85rem;">Créez votre premier audit depuis le formulaire.</p>
+              <a href="/" class="btn btn-primary" style="margin-top:var(--space-lg);">Créer un audit</a>
+            </div>
+          `;
+          return;
+        }
+        
+        document.getElementById('tableContainer').innerHTML = `
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Entreprise</th>
+                <th>Site web</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${audits.map(audit => {
+                const score = audit.scores?.global?.score ?? '—';
+                const rating = audit.scores?.global?.rating || 'poor';
+                const date = new Date(audit.created_at).toLocaleDateString('fr-FR');
+                const statusClass = audit.status === 'complete' ? 'status-complete' : 
+                                    audit.status === 'analyzing' ? 'status-analyzing' : 'status-error';
+                
+                return `<tr>
+                  <td><strong>${escapeHtml(audit.company_name)}</strong><br><span class="text-muted" style="font-size:0.75rem;">${audit.company_sector || ''}</span></td>
+                  <td class="text-muted" style="font-size:0.8rem;">${escapeHtml(audit.company_url || '—')}</td>
+                  <td><span class="score-mini" style="color:${getColor(rating)}">${score}</span><span class="text-muted">/100</span></td>
+                  <td><span class="status-badge ${statusClass}">${audit.status}</span></td>
+                  <td class="text-muted" style="font-size:0.85rem;">${date}</td>
+                  <td>
+                    <a href="/report/${audit.id}" class="action-link" target="_blank">Voir →</a>
+                    <a href="#" class="action-link action-link--danger" onclick="deleteAudit('${audit.id}', event)">Supprimer</a>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        document.getElementById('tableContainer').innerHTML = `
+          <div class="empty-state"><div>Erreur: ${err.message}</div></div>
+        `;
+      }
+    }
+
+    async function deleteAudit(id, e) {
+      e.preventDefault();
+      if (!confirm('Supprimer cet audit ?')) return;
+      await fetch('/api/audit/' + id, { method: 'DELETE' });
+      loadAudits();
+    }
+
+    function getColor(rating) {
+      return { excellent: '#10B981', good: '#3B82F6', average: '#F59E0B', poor: '#EF4444' }[rating] || '#EF4444';
+    }
+
+    function escapeHtml(text) {
+      const d = document.createElement('div'); d.textContent = text || ''; return d.innerHTML;
+    }
+  </script>
+</body>
+</html>

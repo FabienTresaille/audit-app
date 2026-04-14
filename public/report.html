@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapport d'Audit Digital — Alsek</title>
+  <meta name="description" content="Rapport d'audit digital personnalisé — Alsek Agency">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/report.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2228%22 font-size=%2228%22>📊</text></svg>">
+</head>
+<body class="report-page">
+  <!-- Background Glows -->
+  <div class="bg-glow bg-glow--violet"></div>
+  <div class="bg-glow bg-glow--blue"></div>
+
+  <!-- Loading State -->
+  <div id="reportLoading" class="report-loading">
+    <div class="spinner" style="width:64px;height:64px;border-width:4px;"></div>
+    <div class="report-loading__message">Chargement du rapport...</div>
+  </div>
+
+  <!-- Report Content (hidden until loaded) -->
+  <div id="reportContent" style="display:none;">
+
+    <!-- ═══ HERO — Global Score ═══ -->
+    <section class="report-hero">
+      <div class="report-hero__badge">
+        <span class="badge badge-violet" id="heroBadge">AUDIT DIGITAL</span>
+      </div>
+      <div class="report-hero__company" id="heroCompany">—</div>
+      <h1 class="report-hero__title text-gradient">Votre Score Digital</h1>
+
+      <div class="report-hero__score-container">
+        <div class="score-circle score-circle--lg" id="heroScoreCircle">
+          <svg viewBox="0 0 100 100">
+            <circle class="score-circle__bg" cx="50" cy="50" r="42"/>
+            <circle class="score-circle__fill" cx="50" cy="50" r="42"
+              stroke-dasharray="263.9"
+              stroke-dashoffset="263.9"
+              id="heroScoreFill"/>
+          </svg>
+          <span class="score-circle__value" id="heroScoreValue">0</span>
+          <span class="score-circle__label">/ 100</span>
+        </div>
+      </div>
+
+      <div id="heroRatingBadge"></div>
+      <div class="report-hero__date" id="heroDate">—</div>
+
+      <div class="report-hero__scroll-hint no-print">
+        <span>Découvrir le rapport</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- ═══ OVERVIEW — 3 Pillars ═══ -->
+    <section class="report-section container">
+      <div class="report-section__header">
+        <div class="report-section__icon">📊</div>
+        <h2 class="report-section__title">Vue d'ensemble</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle">Votre présence digitale analysée sur 3 piliers fondamentaux</p>
+      </div>
+
+      <div class="pillars-grid" id="pillarsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ EXECUTIVE SUMMARY ═══ -->
+    <section class="report-section container" id="summarySection">
+      <div class="report-section__header">
+        <div class="report-section__icon">📋</div>
+        <h2 class="report-section__title">Synthèse</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="summary-grid" id="summaryGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ PILLAR 1 — Site Web ═══ -->
+    <section class="report-section container" id="pillar1Section">
+      <div class="report-section__header">
+        <div class="report-section__icon">🌐</div>
+        <h2 class="report-section__title">Pilier 1 — Site Web</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle" id="pillar1Subtitle">—</p>
+      </div>
+
+      <div class="criteria-grid" id="pillar1Grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ PILLAR 2 — Contenu & Image ═══ -->
+    <section class="report-section container" id="pillar2Section">
+      <div class="report-section__header">
+        <div class="report-section__icon">📸</div>
+        <h2 class="report-section__title">Pilier 2 — Contenu & Image</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle" id="pillar2Subtitle">—</p>
+      </div>
+
+      <!-- Instagram Profile Card -->
+      <div id="igProfileCard" style="display:none;"></div>
+
+      <!-- Instagram Stats -->
+      <div id="igStatsGrid" class="ig-stats" style="display:none;"></div>
+
+      <div class="criteria-grid" id="pillar2Grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ PILLAR 3 — Publicité ═══ -->
+    <section class="report-section container" id="pillar3Section">
+      <div class="report-section__header">
+        <div class="report-section__icon">📢</div>
+        <h2 class="report-section__title">Pilier 3 — Publicité & Acquisition</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle" id="pillar3Subtitle">—</p>
+      </div>
+
+      <div class="criteria-grid" id="pillar3Grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ BENCHMARK ═══ -->
+    <section class="report-section container" id="benchmarkSection">
+      <div class="report-section__header">
+        <div class="report-section__icon">📈</div>
+        <h2 class="report-section__title">Benchmark Sectoriel</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle">Votre positionnement face à la moyenne de votre secteur</p>
+      </div>
+
+      <div class="benchmark-container">
+        <div class="benchmark-chart">
+          <canvas id="benchmarkChart"></canvas>
+        </div>
+        <div class="benchmark-legend" id="benchmarkLegend">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ RECOMMENDATIONS ═══ -->
+    <section class="report-section container" id="recoSection">
+      <div class="report-section__header">
+        <div class="report-section__icon">🎯</div>
+        <h2 class="report-section__title">Actions Prioritaires</h2>
+        <div class="section-divider"></div>
+        <p class="report-section__subtitle">Les améliorations à fort impact pour transformer votre présence digitale</p>
+      </div>
+
+      <div class="recommendations-list" id="recoList">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ CTA — Next Step ═══ -->
+    <section class="cta-section container" id="ctaSection">
+      <h2 class="cta-section__title">
+        <span class="text-gradient">Prochaine étape</span>
+      </h2>
+      <p class="cta-section__desc">
+        Transformez ces recommandations en résultats concrets.<br>
+        Réservez votre <strong>appel stratégique gratuit de 30 minutes</strong> avec notre équipe.
+      </p>
+
+      <div class="cta-section__buttons">
+        <a href="#" class="btn btn-primary btn-lg" id="ctaBookBtn">
+          📞 Réserver un appel
+        </a>
+        <button class="btn btn-secondary btn-lg" onclick="window.print()">
+          🖨️ Imprimer le rapport
+        </button>
+      </div>
+
+      <div class="cta-section__contact" id="ctaContact">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="report-footer">
+      <div class="report-footer__logo text-gradient" id="footerLogo">ALSEK</div>
+      <div>Audit Digital Automatisé — Rapport confidentiel</div>
+    </footer>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="report-toolbar no-print" id="reportToolbar" style="display:none;">
+    <button class="toolbar-btn" onclick="window.print()" title="Imprimer">🖨️</button>
+    <button class="toolbar-btn" onclick="shareReport()" title="Partager">🔗</button>
+    <button class="toolbar-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Haut de page">⬆️</button>
+  </div>
+
+  <script src="/js/report.js"></script>
+</body>
+</html>

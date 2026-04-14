@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Digital — Alsek</title>
+  <meta name="description" content="Créez un audit digital personnalisé pour vos clients — Alsek Agency">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2228%22 font-size=%2228%22>🔍</text></svg>">
+</head>
+<body class="form-page">
+  <!-- Background Glows -->
+  <div class="bg-glow bg-glow--violet"></div>
+  <div class="bg-glow bg-glow--blue"></div>
+
+  <!-- Header -->
+  <header class="form-header container">
+    <div class="form-header__logo text-gradient">ALSEK</div>
+    <p class="form-header__subtitle">Création d'audit digital personnalisé</p>
+  </header>
+
+  <!-- Progress Bar -->
+  <nav class="wizard-progress container" id="wizardProgress">
+    <div class="wizard-progress__step">
+      <div class="wizard-progress__dot active" data-step="1">1</div>
+    </div>
+    <div class="wizard-progress__line" data-line="1"></div>
+    <div class="wizard-progress__step">
+      <div class="wizard-progress__dot" data-step="2">2</div>
+    </div>
+    <div class="wizard-progress__line" data-line="2"></div>
+    <div class="wizard-progress__step">
+      <div class="wizard-progress__dot" data-step="3">3</div>
+    </div>
+    <div class="wizard-progress__line" data-line="3"></div>
+    <div class="wizard-progress__step">
+      <div class="wizard-progress__dot" data-step="4">4</div>
+    </div>
+    <div class="wizard-progress__line" data-line="4"></div>
+    <div class="wizard-progress__step">
+      <div class="wizard-progress__dot" data-step="5">5</div>
+    </div>
+  </nav>
+
+  <!-- Wizard Form -->
+  <main class="wizard-container container">
+    <form class="wizard-form" id="auditForm" novalidate>
+
+      <!-- ═══ Step 1: Company Info ═══ -->
+      <div class="wizard-step active" data-step="1">
+        <h2 class="wizard-step__title">Informations de l'entreprise</h2>
+        <p class="wizard-step__desc">Renseignez les informations de base de l'entreprise à auditer.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="company_name">Nom de l'entreprise <span class="required">*</span></label>
+          <div class="input-icon-wrapper">
+            <span class="input-icon">🏢</span>
+            <input type="text" class="form-input" id="company_name" name="company_name" placeholder="Ex: Boulangerie Martin" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="company_url">URL du site web</label>
+          <div class="input-icon-wrapper">
+            <span class="input-icon">🌐</span>
+            <input type="url" class="form-input" id="company_url" name="company_url" placeholder="https://www.exemple.fr">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="company_sector">Secteur d'activité</label>
+            <select class="form-select" id="company_sector" name="company_sector">
+              <option value="default">— Sélectionner —</option>
+              <option value="restaurant">Restauration / Hôtellerie</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="services">Services aux entreprises</option>
+              <option value="immobilier">Immobilier</option>
+              <option value="sante">Santé / Bien-être</option>
+              <option value="beaute">Beauté / Esthétique</option>
+              <option value="formation">Formation / Coaching</option>
+              <option value="artisan">Artisanat / BTP</option>
+              <option value="tech">Tech / SaaS</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Dernière refonte du site</label>
+            <select class="form-select" id="site_age" name="site_age">
+              <option value="">— Sélectionner —</option>
+              <option value="less_1_year">Moins d'1 an</option>
+              <option value="1_3_years">1 à 3 ans</option>
+              <option value="more_3_years">Plus de 3 ans</option>
+              <option value="no_site">Pas de site web</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <div></div>
+          <button type="button" class="btn btn-primary" onclick="nextStep()">
+            Suivant →
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ Step 2: Social Media ═══ -->
+      <div class="wizard-step" data-step="2">
+        <h2 class="wizard-step__title">Réseaux sociaux</h2>
+        <p class="wizard-step__desc">Indiquez les liens vers les profils sociaux de l'entreprise.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="instagram_url">Instagram</label>
+          <div class="input-icon-wrapper">
+            <span class="input-icon">📸</span>
+            <input type="text" class="form-input" id="instagram_url" name="instagram_url" placeholder="https://instagram.com/compte ou @compte">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="facebook_url">Facebook</label>
+          <div class="input-icon-wrapper">
+            <span class="input-icon">📘</span>
+            <input type="url" class="form-input" id="facebook_url" name="facebook_url" placeholder="https://facebook.com/page">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="linkedin_url">LinkedIn</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">💼</span>
+              <input type="url" class="form-input" id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/company/...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="tiktok_url">TikTok</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">🎵</span>
+              <input type="url" class="form-input" id="tiktok_url" name="tiktok_url" placeholder="https://tiktok.com/@compte">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="google_business_url">Google Business Profile</label>
+          <div class="input-icon-wrapper">
+            <span class="input-icon">📍</span>
+            <input type="url" class="form-input" id="google_business_url" name="google_business_url" placeholder="Lien Google Maps ou nom exact de la fiche">
+          </div>
+        </div>
+
+        <!-- Instagram manual KPIs (shown when Instagram URL is filled) -->
+        <div id="igManualSection" style="display:none;">
+          <div class="form-divider">Données Instagram (remplir si Apify non configuré)</div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ig_followers">Nombre d'abonnés</label>
+              <input type="number" class="form-input" id="ig_followers" name="ig_followers" placeholder="1500">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ig_avg_likes">Likes moyens / post</label>
+              <input type="number" class="form-input" id="ig_avg_likes" name="ig_avg_likes" placeholder="50">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ig_posts_per_week">Publications par semaine</label>
+            <select class="form-select" id="ig_posts_per_week" name="ig_posts_per_week">
+              <option value="">— Sélectionner —</option>
+              <option value="0.5">Quelques fois par mois</option>
+              <option value="1">1x par semaine</option>
+              <option value="3">2-3x par semaine</option>
+              <option value="5">4-5x par semaine</option>
+              <option value="7">Tous les jours ou plus</option>
+            </select>
+          </div>
+
+          <div class="checkbox-group" style="margin-top: var(--space-md);">
+            <label class="checkbox-tag">
+              <input type="checkbox" id="ig_uses_reels" name="ig_uses_reels">
+              🎬 Utilise les Reels
+            </label>
+            <label class="checkbox-tag">
+              <input type="checkbox" id="ig_uses_highlights" name="ig_uses_highlights">
+              ⭐ Highlights configurés
+            </label>
+            <label class="checkbox-tag">
+              <input type="checkbox" id="ig_uses_stories" name="ig_uses_stories">
+              📱 Stories régulières
+            </label>
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="wizard-nav__back" onclick="prevStep()">
+            ← Retour
+          </button>
+          <button type="button" class="btn btn-primary" onclick="nextStep()">
+            Suivant →
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ Step 3: Advertising & Marketing ═══ -->
+      <div class="wizard-step" data-step="3">
+        <h2 class="wizard-step__title">Publicité & Marketing</h2>
+        <p class="wizard-step__desc">Évaluez la stratégie publicitaire actuelle du client.</p>
+
+        <div class="form-group">
+          <label class="form-label">Publicité en ligne active ?</label>
+          <div class="option-cards">
+            <label class="option-card">
+              <input type="radio" name="ads_active" value="yes_tracked">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Oui, avec suivi des performances</div>
+                <div class="option-card__desc">Google Ads, Meta Ads avec KPIs suivis</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="ads_active" value="yes_no_tracking">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Oui, mais sans vrai suivi</div>
+                <div class="option-card__desc">Des pubs tournent mais pas de tableau de bord</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="ads_active" value="no_interested">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Non, mais intéressé</div>
+                <div class="option-card__desc">Souhaite commencer la publicité en ligne</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="ads_active" value="no">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Non, pas de publicité</div>
+                <div class="option-card__desc">Aucune publicité en ligne actuellement</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Budget mensuel marketing</label>
+            <select class="form-select" id="budget" name="budget">
+              <option value="none">— Sélectionner —</option>
+              <option value="less_500">Moins de 500€</option>
+              <option value="500_2000">500€ — 2 000€</option>
+              <option value="2000_5000">2 000€ — 5 000€</option>
+              <option value="more_5000">Plus de 5 000€</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Suivi des conversions</label>
+            <select class="form-select" id="conversion_tracking" name="conversion_tracking">
+              <option value="no">Pas de suivi</option>
+              <option value="yes_basic">Basique (formulaires, clics)</option>
+              <option value="yes_advanced">Avancé (événements, valeurs, ROI)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Stratégie d'acquisition</label>
+          <div class="option-cards option-cards--2col">
+            <label class="option-card">
+              <input type="radio" name="acquisition_strategy" value="multi_channel">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Multi-canal</div>
+                <div class="option-card__desc">SEO + Ads + Social + Email</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="acquisition_strategy" value="single_channel">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Un seul canal</div>
+                <div class="option-card__desc">Un canal principal uniquement</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="acquisition_strategy" value="organic_only">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Organique seulement</div>
+                <div class="option-card__desc">Pas de budget publicitaire</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="acquisition_strategy" value="none">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">Pas de stratégie</div>
+                <div class="option-card__desc">Aucune stratégie définie</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Avis clients visibles</label>
+          <select class="form-select" id="reviews" name="reviews">
+            <option value="none">Aucun avis visible</option>
+            <option value="few">Très peu (1-5 avis)</option>
+            <option value="some">Quelques avis (5-20)</option>
+            <option value="many">Beaucoup d'avis (20+)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Cohérence visuelle du branding (1 = faible, 5 = excellent)</label>
+          <select class="form-select" id="visual_coherence" name="visual_coherence">
+            <option value="1">1 — Pas de charte graphique</option>
+            <option value="2">2 — Peu cohérent</option>
+            <option value="3">3 — Correct</option>
+            <option value="4">4 — Bon niveau</option>
+            <option value="5">5 — Très professionnel</option>
+          </select>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="wizard-nav__back" onclick="prevStep()">
+            ← Retour
+          </button>
+          <button type="button" class="btn btn-primary" onclick="nextStep()">
+            Suivant →
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ Step 4: Contact ═══ -->
+      <div class="wizard-step" data-step="4">
+        <h2 class="wizard-step__title">Contact du client</h2>
+        <p class="wizard-step__desc">Coordonnées du contact principal chez le client.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="contact_firstname">Prénom</label>
+            <input type="text" class="form-input" id="contact_firstname" name="contact_firstname" placeholder="Jean">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact_lastname">Nom</label>
+            <input type="text" class="form-input" id="contact_lastname" name="contact_lastname" placeholder="Dupont">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="contact_email">Email</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" class="form-input" id="contact_email" name="contact_email" placeholder="jean@exemple.fr">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact_phone">Téléphone</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">📞</span>
+              <input type="tel" class="form-input" id="contact_phone" name="contact_phone" placeholder="06 12 34 56 78">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact_notes">Notes additionnelles</label>
+          <textarea class="form-textarea" id="contact_notes" name="contact_notes" placeholder="Informations complémentaires sur le client, objectifs, contexte..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Objectif principal du client</label>
+          <div class="option-cards option-cards--2col">
+            <label class="option-card">
+              <input type="radio" name="objective" value="leads">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">🎯 Générer des leads</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="objective" value="visibility">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">👀 Augmenter la visibilité</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="objective" value="branding">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">💎 Améliorer l'image</div>
+              </div>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="objective" value="launch">
+              <span class="option-card__indicator"></span>
+              <div class="option-card__content">
+                <div class="option-card__title">🚀 Lancer un produit</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="wizard-nav__back" onclick="prevStep()">
+            ← Retour
+          </button>
+          <button type="button" class="btn btn-primary" onclick="nextStep()">
+            Suivant →
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ Step 5: Review & Launch ═══ -->
+      <div class="wizard-step" data-step="5">
+        <h2 class="wizard-step__title">Lancer l'audit</h2>
+        <p class="wizard-step__desc">Vérifiez les informations et lancez l'analyse automatisée.</p>
+
+        <div class="glass-card" style="margin-bottom: var(--space-xl);">
+          <h4 style="margin-bottom: var(--space-lg);">📋 Résumé</h4>
+          <div id="reviewSummary" style="display: flex; flex-direction: column; gap: var(--space-md); font-size: 0.9rem; color: var(--text-secondary);">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+
+        <div class="glass-card" style="margin-bottom: var(--space-xl);">
+          <h4 style="margin-bottom: var(--space-md);">⚡ Analyses automatiques</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-lg);">Les analyses suivantes seront lancées automatiquement :</p>
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm);" id="analysisChecklist">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="wizard-nav__back" onclick="prevStep()">
+            ← Retour
+          </button>
+          <button type="submit" class="btn btn-primary btn-lg" id="launchBtn">
+            🚀 Lancer l'audit
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner" style="width: 64px; height: 64px; border-width: 4px;"></div>
+    <div class="loading-overlay__text" id="loadingText">Analyse en cours...</div>
+    <div class="loading-overlay__subtext" id="loadingSubtext">Analyse du site web via Google PageSpeed...</div>
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <script src="/js/form.js"></script>
+</body>
+</html>
