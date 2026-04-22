@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+server/data/*.xlsx
+server/db/
+server/uploads/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ROKIA — Dashboard de recatégorisation de tickets">
+    <title>ROKIA — Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>ROKIA</h1>
+                <span>Recatégorisation IA</span>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-page="analysis" onclick="showPage('analysis')">
+                    <span class="nav-icon">🔬</span> Nouvelle analyse
+                </div>
+                <div class="nav-item" data-page="history" onclick="showPage('history')">
+                    <span class="nav-icon">📋</span> Historique
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <span class="user-name" id="userName">Admin</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    ⎋ Déconnexion
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- ====== ANALYSIS PAGE ====== -->
+            <div id="analysisPage">
+                <div class="page-header">
+                    <h2>🔬 Nouvelle analyse</h2>
+                    <p>Recatégorisez vos tickets support grâce à l'intelligence artificielle</p>
+                </div>
+
+                <div id="mainAlert" class="alert"></div>
+
+                <!-- Reference File -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">📚</span> Fichier référentiel ROKIA</div>
+                        <div id="refStatus" class="badge badge-no">Non chargé</div>
+                    </div>
+                    <div id="refUploadZone" class="upload-zone">
+                        <div class="upload-icon">📄</div>
+                        <p>Glissez-déposez le fichier <strong>ROKIA.xlsx</strong> ici</p>
+                        <p>ou <span class="browse-link">parcourez vos fichiers</span></p>
+                        <input type="file" id="refFileInput" accept=".xlsx,.xls">
+                    </div>
+                    <div id="refSuccess" class="upload-success hidden">
+                        ✅ <span id="refSuccessText">Référentiel chargé</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Config -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">⚙️</span> Configuration de l'analyse</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="clientName">Nom du client</label>
+                            <input type="text" id="clientName" class="form-input" 
+                                   placeholder="Ex: Entreprise ABC" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="copilDate">Date du COPIL</label>
+                            <input type="date" id="copilDate" class="form-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket Upload -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">🎫</span> Fichier de tickets</div>
+                    </div>
+                    <div id="ticketUploadZone" class="upload-zone">
+                        <div class="upload-icon">📊</div>
+                        <p>Glissez-déposez le fichier <strong>tickets .xlsx</strong> ici</p>
+                        <p>ou <span class="browse-link">parcourez vos fichiers</span></p>
+                        <input type="file" id="ticketFileInput" accept=".xlsx,.xls">
+                    </div>
+                    <div id="ticketSuccess" class="upload-success hidden">
+                        ✅ <span id="ticketSuccessText">Fichier chargé</span>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <button class="btn btn-primary" id="launchBtn" onclick="launchAnalysis()" 
+                        style="max-width:400px; margin: 0 auto; display:flex;">
+                    🚀 Lancer l'analyse IA
+                </button>
+
+                <!-- Progress -->
+                <div class="card progress-section" id="progressSection">
+                    <div class="card-title"><span class="icon">⏳</span> Traitement en cours...</div>
+                    <div class="progress-bar-container mt-2">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressLabel">Initialisation...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="results-section" id="resultsSection">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><span class="icon">📊</span> Résultats</div>
+                            <button class="btn btn-primary btn-sm" onclick="exportResults()">
+                                📥 Exporter .xlsx
+                            </button>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="results-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="statTotal">0</div>
+                                <div class="stat-label">Tickets analysés</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statRecat">0</div>
+                                <div class="stat-label">Recatégorisés</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statKept">0</div>
+                                <div class="stat-label">Catégorie maintenue</div>
+                            </div>
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="filter-bar">
+                            <button class="filter-btn active" data-filter="all" onclick="filterResults('all', this)">
+                                Tous
+                            </button>
+                            <button class="filter-btn" data-filter="yes" onclick="filterResults('yes', this)">
+                                ✅ Recatégorisés
+                            </button>
+                            <button class="filter-btn" data-filter="no" onclick="filterResults('no', this)">
+                                ➖ Maintenus
+                            </button>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-wrapper">
+                            <table class="results-table" id="resultsTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable(0)">N° Ticket <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(1)">DIT No Interne <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(2)">DIT État <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(3)">Ancienne Catégorie <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(4)">Nouvelle Catégorie <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(5)">Contrat <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(6)">Délai <span class="sort-icon">↕</span></th>
+                                        <th onclick="sortTable(7)">Recatégorisé <span class="sort-icon">↕</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== HISTORY PAGE ====== -->
+            <div id="historyPage" class="history-section">
+                <div class="page-header">
+                    <h2>📋 Historique des analyses</h2>
+                    <p>Retrouvez toutes vos analyses passées par client</p>
+                </div>
+                <div id="historyContent">
+                    <p class="text-muted text-center mt-3">Chargement...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

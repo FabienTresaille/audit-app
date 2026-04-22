@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ROKIA — Outil de recatégorisation de tickets support par IA">
+    <title>ROKIA — Connexion</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-logo">
+                <h1>ROKIA</h1>
+                <p>Recatégorisation intelligente de tickets</p>
+            </div>
+
+            <div id="loginAlert" class="alert alert-error"></div>
+
+            <form id="loginForm" autocomplete="off">
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input type="text" id="username" class="form-input" 
+                           placeholder="Entrez votre identifiant" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" class="form-input" 
+                           placeholder="Entrez votre mot de passe" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Vérification de sécurité</label>
+                    <div class="captcha-container">
+                        <div class="captcha-question" id="captchaQuestion">...</div>
+                        <input type="number" id="captchaAnswer" class="form-input captcha-input" 
+                               placeholder="?" required>
+                        <button type="button" class="captcha-refresh" id="refreshCaptcha" title="Nouveau CAPTCHA">
+                            ⟳
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    Se connecter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/auth.js"></script>
+</body>
+</html>

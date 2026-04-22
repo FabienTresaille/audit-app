@@ -1,0 +1,27 @@
+services:
+  rokia:
+    build: .
+    container_name: rokia
+    env_file: .env
+    volumes:
+      - rokia_data:/app/server/data
+      - rokia_db:/app/server/db
+      - rokia_uploads:/app/server/uploads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rokia.rule=Host(`rokia.alsek.fr`)"
+      - "traefik.http.routers.rokia.entrypoints=websecure"
+      - "traefik.http.routers.rokia.tls.certresolver=letsencrypt"
+      - "traefik.http.services.rokia.loadbalancer.server.port=8000"
+    networks:
+      - traefik_network
+    restart: unless-stopped
+
+volumes:
+  rokia_data:
+  rokia_db:
+  rokia_uploads:
+
+networks:
+  traefik_network:
+    external: true
