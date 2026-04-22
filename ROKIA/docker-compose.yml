@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.rokia.tls.certresolver=letsencrypt"
       - "traefik.http.services.rokia.loadbalancer.server.port=8000"
     networks:
-      - traefik_network
+      - audit-app_web
     restart: unless-stopped
 
 volumes:
@@ -23,5 +23,5 @@ volumes:
   rokia_uploads:
 
 networks:
-  traefik_network:
+  audit-app_web:
     external: true
